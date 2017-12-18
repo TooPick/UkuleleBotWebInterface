@@ -3,7 +3,6 @@ import {ToastComponent} from '../../../shared/toast/toast.component';
 import {Playlist} from '../../../shared/models/playlist.model';
 import {PlaylistService} from '../../../services/playlist.service';
 import {ActivatedRoute} from '@angular/router';
-import { YTSearcher } from 'ytsearcher';
 
 @Component({
     selector: 'app-dashboard-add-song',
