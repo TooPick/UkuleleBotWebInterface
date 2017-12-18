@@ -1,0 +1,37 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isLoading">
+  <h4 class="card-header">Mon compte</h4>
+  <div class="card-block">
+    <div class="row">
+      <div class="col-md-3">
+        <p><strong>Nom d'utilisateur : </strong>{{user.username}}</p>
+      </div>
+      <div class="col-md-9">
+        <h3>Changer de mot de passe</h3>
+        <hr />
+        <form [formGroup]="changePasswordForm" (ngSubmit)="save(user)">
+          <div class="form-group">
+            <label for="password">Nouveau mot de passe</label>
+            <input formControlName="password" class="form-control" type="password" id="password" name="password" [ngClass]="setClassPassword()" placeholder="Nouveau mot de passe" required>
+            <div class="invalid-feedback">
+              Vous devez renseigner ce champs.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirmation du nouveau mot de passe</label>
+            <input formControlName="confirmPassword" class="form-control" type="password" id="confirmPassword" name="confirmPassword" [ngClass]="setClassConfirmPassword()" placeholder="Confirmation du nouveau mot de passe" required>
+            <div class="invalid-feedback">
+              Les deux mots de passe doivent être les mêmes.
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit" [disabled]="!changePasswordForm.valid">
+            <i class="fa fa-save"></i> Enregistrer
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

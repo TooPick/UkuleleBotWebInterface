@@ -1,0 +1,16 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isLoading">
+  <h4 class="card-header">Administration - Ajouter une chanson à la playlist</h4>
+  <div class="card-block">
+    <div class="row">
+      <div class="col-md-12">
+        <button class="btn btn-secondary">test</button>
+          <input #searchField class="form-control" type="text" name="searchField" placeholder="Lien youtube ou mots clés">
+          <button class="btn btn-secondary" type="submit" (click)="searchSong()">Ajouter</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isLoading">
+  <h4 class="card-header">Administration - Liste des utilisateurs ({{users.length}})</h4>
+  <div class="card-block">
+    <div class="row">
+      <div class="col-md-12">
+        <a routerLink="/admin/user/add" class="btn btn-primary">Ajouter un utilisateur</a>
+      </div>
+    </div>
+    <br />
+
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-bordered table-striped">
+          <thead class="thead-default">
+          <tr>
+            <th>Nom d'utilisateur</th>
+            <th>Rôle</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody *ngIf="users.length === 0">
+          <tr>
+            <td colspan="4">Aucun utilisateur n'est enregistré.</td>
+          </tr>
+          </tbody>
+          <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{user.username}}</td>
+            <td>{{user.role}}</td>
+            <td>
+              <button class="btn btn-sm btn-danger" (click)="deleteUser(user)" [disabled]="auth.currentUser._id === user._id">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card">
+  <h4 class="card-header">Administration - Ajouter une playlist</h4>
+  <div class="card-block">
+    <div class="row">
+      <div class="col-md-12">
+        <a (click)="back()" class="btn btn-primary">Retour</a>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <form [formGroup]="addPlaylistForm" (submit)="savePlaylist()">
+          <div class="form-group">
+            <label for="name">Nom</label>
+            <input formControlName="name" class="form-control" [ngClass]="setClassPassword()" type="text" id="name" name="name" required>
+          </div>
+
+          <button class="btn btn-primary" type="submit" [disabled]="!addPlaylistForm.valid">
+            <i class="fa fa-save"></i> Enregistrer
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

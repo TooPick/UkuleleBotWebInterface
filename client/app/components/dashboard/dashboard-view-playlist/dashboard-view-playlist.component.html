@@ -1,0 +1,60 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isLoading">
+  <h4 class="card-header">Administration - Playlist : {{ playlist.name }}</h4>
+  <div class="card-block">
+    <div class="row">
+      <div class="col-md-12">
+        <a (click)="back()" class="btn btn-primary">Retour</a>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-hover">
+          <tr>
+            <td>Nom de la playlist</td>
+            <th>{{ playlist.name }}</th>
+          </tr>
+          <tr>
+            <td>Slug (utilisé comme identifiant par le bot)</td>
+            <th>{{ playlist.slug }}</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Liste des chansons <a routerLink="/dashboard/playlists/{{playlist._id}}/song/add" class="btn btn-success">Ajouter une chanson</a></h3>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>Titre</th>
+            <th>URL</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody *ngFor="let song of playlist.songs">
+            <tr>
+              <td>{{song.title}}</td>
+              <td>{{song.url}}</td>
+              <td>
+                <button class="btn btn-sm btn-danger">
+                  <i class="fa fa-trash" (click)="deleteSong(song)"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="playlist.songs.length === 0">
+          <tr>
+            <td colspan="3">Aucune chanson n'est enregistré.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
