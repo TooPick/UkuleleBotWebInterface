@@ -10,7 +10,6 @@ export default function passportInit(passport) {
 
     passport.use(new Strategy(opts, (jwt_payload, done) => {
         User.findOne({_id: jwt_payload.user._id}, (err, user) => {
-            console.log(user);
             if (err) {
                 return done(err, false);
             }

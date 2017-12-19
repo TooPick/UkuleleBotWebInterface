@@ -1,9 +1,5 @@
-import * as dotenv from 'dotenv';
-import * as jwt from 'jsonwebtoken';
-
 import Playlist from '../models/Playlist';
 import BaseCtrl from './base';
-import Song from '../models/song';
 
 export default class PlaylistCtrl extends BaseCtrl {
     model = Playlist;
@@ -24,9 +20,9 @@ export default class PlaylistCtrl extends BaseCtrl {
             .lean()
             .populate('songs')
             .exec((err, item) => {
-            if (err) { return console.error(err); }
-            res.status(200).json(item);
-        });
+                if (err) { return console.error(err); }
+                res.status(200).json(item);
+            });
     }
 
     // Delete by id
@@ -36,15 +32,17 @@ export default class PlaylistCtrl extends BaseCtrl {
             .populate('songs')
             .exec((err, item) => {
                 if (err) { return console.error(err); }
-                for (const song of item.songs) {
-                    song.remove();
+
+                if (item) {
+                    for (const song of item.songs) {
+                        this.model.remove({ _id: song._id });
+                    }
+                    this.model.remove({ _id: item._id }, (error) => {
+                        if (error) { return console.error(error); }
+
+                        res.sendStatus(200);
+                    });
                 }
-
-                item.remove((error) => {
-                    if (error) { return console.error(error); }
-
-                    res.sendStatus(200);
-                });
             });
     }
 }

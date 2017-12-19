@@ -21,6 +21,7 @@ import { DashboardAddPlaylistComponent } from './components/dashboard/dashboard-
 import { DashboardViewPlaylistComponent } from './components/dashboard/dashboard-view-playlist/dashboard-view-playlist.component';
 import { DashboardAddSongComponent } from './components/dashboard/dashboard-add-song/dashboard-add-song.component';
 import {SongService} from './services/song.service';
+import {TokenService} from './services/token.service';
 
 @NgModule({
     declarations: [
@@ -48,7 +49,8 @@ import {SongService} from './services/song.service';
         AuthGuardAdmin,
         UserService,
         PlaylistService,
-        SongService
+        SongService,
+        TokenService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]
