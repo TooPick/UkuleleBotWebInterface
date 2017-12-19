@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as passport from 'passport';
+import roleAuthorisation from './config/roleAuthorization';
 
 import UserCtrl from './controllers/user';
 import PlaylistCtrl from './controllers/playlist';
@@ -9,7 +10,6 @@ export default function setRoutes(app) {
 
     // Passports
     const passportUser = passport.authenticate('jwt', {session: false});
-    const passportAdmin = passport.authenticate('jwt_admin', {session: false});
 
     const router = express.Router();
 
@@ -19,29 +19,29 @@ export default function setRoutes(app) {
 
     // Users
     router.route('/login').post(userCtrl.login);
-    router.route('/users').get(userCtrl.getAll);
-    router.route('/users/count').get(userCtrl.count);
-    router.route('/user').post(passportUser, userCtrl.insert);
-    router.route('/user/:id').get(userCtrl.get);
-    router.route('/user/:id').put(userCtrl.update);
-    router.route('/user/:id/changePassword').patch(userCtrl.changePassword);
-    router.route('/user/:id').delete(userCtrl.delete);
+    router.route('/users').get(passportUser, userCtrl.getAll);
+    router.route('/users/count').get(passportUser, userCtrl.count);
+    router.route('/user').post(passportUser, roleAuthorisation(['ROLE_ADMIN']), userCtrl.insert);
+    router.route('/user/:id').get(passportUser, userCtrl.get);
+    router.route('/user/:id').put(passportUser, userCtrl.update);
+    router.route('/user/:id/changePassword').patch(passportUser, userCtrl.changePassword);
+    router.route('/user/:id').delete(passportUser, roleAuthorisation(['ROLE_ADMIN']), userCtrl.delete);
 
     // Playlist
-    router.route('/playlists').get(playlistCtrl.getAll);
-    router.route('/playlists').post(playlistCtrl.insert);
-    router.route('/playlists/:id').get(playlistCtrl.get);
-    router.route('/playlists/:id').delete(playlistCtrl.delete);
-    router.route('/playlists/:id').put(playlistCtrl.update);
-    router.route('/playlists/count').get(playlistCtrl.count);
+    router.route('/playlists').get(passportUser, playlistCtrl.getAll);
+    router.route('/playlists').post(passportUser, playlistCtrl.insert);
+    router.route('/playlists/:id').get(passportUser, playlistCtrl.get);
+    router.route('/playlists/:id').delete(passportUser, playlistCtrl.delete);
+    router.route('/playlists/:id').put(passportUser, playlistCtrl.update);
+    router.route('/playlists/count').get(passportUser, playlistCtrl.count);
 
     // Song
-    router.route('/songs').get(songCtrl.getAll);
-    router.route('/songs').post(songCtrl.insert);
-    router.route('/songs/:id').get(songCtrl.get);
-    router.route('/songs/:id').delete(songCtrl.delete);
-    router.route('/songs/:id').put(songCtrl.update);
-    router.route('/songs/count').get(songCtrl.count);
+    router.route('/songs').get(passportUser, songCtrl.getAll);
+    router.route('/songs').post(passportUser, songCtrl.insert);
+    router.route('/songs/:id').get(passportUser, songCtrl.get);
+    router.route('/songs/:id').delete(passportUser, songCtrl.delete);
+    router.route('/songs/:id').put(passportUser, songCtrl.update);
+    router.route('/songs/count').get(passportUser, songCtrl.count);
 
     // Apply the routes to our application with the prefix /api
     app.use('/api', router);
