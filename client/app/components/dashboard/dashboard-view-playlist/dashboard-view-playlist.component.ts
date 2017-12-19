@@ -26,7 +26,7 @@ export class DashboardViewPlaylistComponent implements OnInit {
     ) { }
 
     getPlaylist() {
-        this.playlistService.getPlaylist({_id: this.route.snapshot.paramMap.get('id')}).subscribe(
+        this.playlistService.getById({_id: this.route.snapshot.paramMap.get('id')}).subscribe(
             res => {
                 this.loading = false;
                 this.playlist = res;
@@ -46,7 +46,7 @@ export class DashboardViewPlaylistComponent implements OnInit {
     }
 
     deleteSong(song: Song) {
-        this.songService.deleteSong(song).subscribe(
+        this.songService.delete(song).subscribe(
             res => {
                 this.toast.setMessage('La chanson a bien été supprimée de la playlist !', 'success');
                 this.getPlaylist();

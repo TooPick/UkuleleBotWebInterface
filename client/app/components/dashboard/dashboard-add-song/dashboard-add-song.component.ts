@@ -21,7 +21,7 @@ export class DashboardAddSongComponent implements OnInit {
     ) { }
 
     getPlaylist() {
-        this.playlistService.getPlaylist({_id: this.route.snapshot.paramMap.get('id')}).subscribe(
+        this.playlistService.getById({_id: this.route.snapshot.paramMap.get('id')}).subscribe(
             res => {
                 this.loading = false;
                 this.playlist = res;

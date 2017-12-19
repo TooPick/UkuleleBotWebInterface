@@ -5,6 +5,7 @@ import roleAuthorisation from './config/roleAuthorization';
 import UserCtrl from './controllers/user';
 import PlaylistCtrl from './controllers/playlist';
 import SongCtrl from './controllers/song';
+import YoutubeCtrl from './controllers/youtube';
 
 export default function setRoutes(app) {
 
@@ -16,6 +17,7 @@ export default function setRoutes(app) {
     const userCtrl = new UserCtrl();
     const playlistCtrl = new PlaylistCtrl();
     const songCtrl = new SongCtrl();
+    const youtubeCtrl = new YoutubeCtrl();
 
     // Users
     router.route('/login').post(userCtrl.login);
@@ -42,6 +44,9 @@ export default function setRoutes(app) {
     router.route('/songs/:id').delete(passportUser, songCtrl.delete);
     router.route('/songs/:id').put(passportUser, songCtrl.update);
     router.route('/songs/count').get(passportUser, songCtrl.count);
+
+    // Youtube Search
+    router.route('/youtube/search').post(youtubeCtrl.youtubeSearch);
 
     // Apply the routes to our application with the prefix /api
     app.use('/api', router);

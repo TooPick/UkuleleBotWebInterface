@@ -41,7 +41,7 @@ export class DashboardAddPlaylistComponent implements OnInit {
 
     savePlaylist() {
         console.log(this.addPlaylistForm.value);
-        this.playlistService.addPlaylist(this.addPlaylistForm.value).subscribe(
+        this.playlistService.add(this.addPlaylistForm.value).subscribe(
             res => {
                 this.toast.setMessage('La playlist a bien été créée !', 'success');
                 this.router.navigate(['/dashboard/playlists']);

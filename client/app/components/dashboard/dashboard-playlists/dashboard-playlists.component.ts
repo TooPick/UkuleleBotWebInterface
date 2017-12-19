@@ -19,7 +19,7 @@ export class DashboardPlaylistsComponent implements OnInit {
     ) { }
 
     getPlaylists() {
-        this.playlistService.getPlaylists().subscribe(
+        this.playlistService.getAll().subscribe(
             res => {
                 this.playlists = res;
                 this.loading = false;
@@ -33,7 +33,7 @@ export class DashboardPlaylistsComponent implements OnInit {
     }
 
     deletePlaylist(playlist: Playlist) {
-        this.playlistService.deletePlaylist(playlist).subscribe(
+        this.playlistService.delete(playlist).subscribe(
             data => this.toast.setMessage('La playlist a bien été supprimée !', 'success'),
             error => console.log(error),
             () => this.getPlaylists()
