@@ -1,15 +1,47 @@
-<app-loading [condition]="isLoading"></app-loading>
-
 <app-toast [message]="toast.message"></app-toast>
 
-<div class="card" *ngIf="!isLoading">
-  <h4 class="card-header">Administration - Ajouter une chanson à la playlist</h4>
+<div class="card" *ngIf="playlist">
+  <h4 class="card-header">Administration - Ajouter une chanson à la playlist : {{playlist.name}}</h4>
   <div class="card-block">
     <div class="row">
       <div class="col-md-12">
-        <button class="btn btn-secondary">test</button>
-          <input #searchField class="form-control" type="text" name="searchField" placeholder="Lien youtube ou mots clés">
-          <button class="btn btn-secondary" type="submit" (click)="searchSong()">Ajouter</button>
+        <a (click)="back()" class="btn btn-primary">Retour</a>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <form class="form-inline" (submit)="searchSong()">
+          <div class="form-group">
+            <input #searchField id="searchField" [(ngModel)]="keywords" class="form-control" type="text" name="searchField" placeholder="Lien youtube ou mots clés" />
+          </div>
+          <button type="submit" class="btn btn-primary">Rechercher</button>
+        </form>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row" *ngIf="results">
+      <div class="col-md-12">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>Titre</th>
+            <th>URL</th>
+            <th>Miniature</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let result of results">
+              <td>{{result.title}}</td>
+              <td>{{result.link}}</td>
+              <td><img src="{{result.thumbnails.default.url}}" /></td>
+              <td><a (click)="addSong(result)" class="btn btn-success">Ajouter</a></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

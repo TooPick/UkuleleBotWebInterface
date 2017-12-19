@@ -46,7 +46,7 @@ export default function setRoutes(app) {
     router.route('/songs/count').get(passportUser, songCtrl.count);
 
     // Youtube Search
-    router.route('/youtube/search').post(youtubeCtrl.youtubeSearch);
+    router.route('/youtube/search').post(passportUser, youtubeCtrl.youtubeSearch);
 
     // Apply the routes to our application with the prefix /api
     app.use('/api', router);

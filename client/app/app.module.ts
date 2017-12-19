@@ -22,6 +22,7 @@ import { DashboardViewPlaylistComponent } from './components/dashboard/dashboard
 import { DashboardAddSongComponent } from './components/dashboard/dashboard-add-song/dashboard-add-song.component';
 import {SongService} from './services/song.service';
 import {TokenService} from './services/token.service';
+import {YoutubeService} from './services/youtube.service';
 
 @NgModule({
     declarations: [
@@ -50,7 +51,8 @@ import {TokenService} from './services/token.service';
         UserService,
         PlaylistService,
         SongService,
-        TokenService
+        TokenService,
+        YoutubeService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]
