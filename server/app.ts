@@ -4,6 +4,8 @@ import * as express from 'express';
 import * as morgan from 'morgan';
 import * as mongoose from 'mongoose';
 import * as path from 'path';
+import * as passport from 'passport';
+import passportInit from './config/passport';
 
 import seed from './seed';
 
@@ -19,37 +21,43 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 let mongodbURI;
 if (process.env.NODE_ENV === 'test') {
-  mongodbURI = process.env.MONGODB_TEST_URI;
+    mongodbURI = process.env.MONGODB_TEST_URI;
 } else {
-  mongodbURI = process.env.MONGODB_URI;
-  app.use(morgan('dev'));
+    mongodbURI = process.env.MONGODB_URI;
+    app.use(morgan('dev'));
 }
 
 mongoose.Promise = global.Promise;
 const mongodb = mongoose.connect(mongodbURI, { useMongoClient: true });
 
 mongodb
-  .then((db) => {
-    console.log('Connected to MongoDB on', db.host + ':' + db.port);
+    .then((db) => {
+        console.log('Connected to MongoDB on', db.host + ':' + db.port);
 
-    // Create default admin user
-    seed();
+        // Create default admin user
+        seed();
 
-    setRoutes(app);
+        // Init passport
+        app.use(passport.initialize());
+        app.use(passport.session());
 
-    app.get('/*', function(req, res) {
-      res.sendFile(path.join(__dirname, '../public/index.html'));
+        passportInit(passport);
+
+        setRoutes(app);
+
+        app.get('/*', function(req, res) {
+            res.sendFile(path.join(__dirname, '../public/index.html'));
+        });
+
+        if (!module.parent) {
+            app.listen(app.get('port'), () => {
+                console.log('Ukulele Bot Web Interface on port ' + app.get('port'));
+            });
+        }
+
+    })
+    .catch((err) => {
+        console.error(err);
     });
-
-    if (!module.parent) {
-      app.listen(app.get('port'), () => {
-        console.log('Ukulele Bot Web Interface on port ' + app.get('port'));
-      });
-    }
-
-  })
-  .catch((err) => {
-    console.error(err);
-});
 
 export { app };
