@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
 
-import Song from '../models/Song';
+import Song from '../models/song';
 import BaseCtrl from './base';
 
 export default class SongCtrl extends BaseCtrl {

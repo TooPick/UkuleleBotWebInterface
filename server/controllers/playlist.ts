@@ -1,4 +1,4 @@
-import Playlist from '../models/Playlist';
+import Playlist from '../models/playlist';
 import BaseCtrl from './base';
 
 export default class PlaylistCtrl extends BaseCtrl {
