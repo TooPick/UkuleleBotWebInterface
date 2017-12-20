@@ -5,6 +5,7 @@ import * as morgan from 'morgan';
 import * as mongoose from 'mongoose';
 import * as path from 'path';
 import * as passport from 'passport';
+import * as cors from 'cors';
 import passportInit from './config/passport';
 
 import seed from './seed';
@@ -14,6 +15,9 @@ import setRoutes from './routes';
 const app = express();
 dotenv.load({ path: '.env' });
 app.set('port', (process.env.PORT || 3000));
+
+// CORS Middleware
+app.use(cors());
 
 app.use('/', express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
