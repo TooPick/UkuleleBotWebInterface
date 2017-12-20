@@ -45,4 +45,14 @@ export default class PlaylistCtrl extends BaseCtrl {
                 }
             });
     }
+
+    getBySlug = (req, res) => {
+        this.model.findOne({ slug: req.params.slug })
+            .lean()
+            .populate('songs')
+            .exec((err, item) => {
+                if (err) { return console.error(err); }
+                res.status(200).json(item);
+            });
+    }
 }
