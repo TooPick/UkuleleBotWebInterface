@@ -32,11 +32,11 @@ export default function setRoutes(app) {
     // Playlist
     router.route('/playlists').get(passportUser, playlistCtrl.getAll);
     router.route('/playlists').post(passportUser, playlistCtrl.insert);
+    router.route('/playlists/slug/:slug').get(passportUser, playlistCtrl.getBySlug);
     router.route('/playlists/:id').get(passportUser, playlistCtrl.get);
     router.route('/playlists/:id').delete(passportUser, playlistCtrl.delete);
     router.route('/playlists/:id').put(passportUser, playlistCtrl.update);
     router.route('/playlists/count').get(passportUser, playlistCtrl.count);
-    router.route('/playlists/slug/:slug').get(passportUser, playlistCtrl.getBySlug);
 
     // Song
     router.route('/songs').get(passportUser, songCtrl.getAll);
