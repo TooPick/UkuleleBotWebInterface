@@ -1,8 +1,8 @@
-<app-loading [condition]="isLoading"></app-loading>
+<app-loading [condition]="loading"></app-loading>
 
 <app-toast [message]="toast.message"></app-toast>
 
-<div class="card" *ngIf="!isLoading">
+<div class="card" *ngIf="!loading">
   <h4 class="card-header">Administration - Gestion des playlists ({{playlists.length}})</h4>
   <div class="card-block">
     <div class="row">
